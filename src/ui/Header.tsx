@@ -1,19 +1,7 @@
-import { Link } from 'react-router';
-
 function Header() {
   return (
-    <header>
-      <ul>
-        <li>
-          <Link to="/words">Words</Link>
-        </li>
-        <li>
-          <Link to="/study">Study</Link>
-        </li>
-        <li>
-          <Link to="/add">Add</Link>
-        </li>
-      </ul>
+    <header className="py-5">
+      <p>HEADER APP</p>
     </header>
   );
 }
