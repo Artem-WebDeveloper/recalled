@@ -14,7 +14,7 @@ function WordItem({ word }: { word: IWord }) {
 
       <div className="flex flex-1 justify-center">
         {isShowTranslate ? (
-          <p>{word.translate}</p>
+          <p className="animate-in fade-in slide-in-from-bottom-2 duration-200">{word.translate}</p>
         ) : (
           <Button
             onClick={() => setIsShowTranslate((show) => !show)}
