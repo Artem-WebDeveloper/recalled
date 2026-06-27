@@ -2,7 +2,7 @@ import { NavLink, type NavLinkRenderProps } from 'react-router';
 import { AcademicCapIcon, FolderPlusIcon, PencilSquareIcon } from '@heroicons/react/24/solid';
 
 const linkStyle = ({ isActive }: NavLinkRenderProps) =>
-  `flex w-full items-center justify-center space-x-2 rounded-2xl  px-2 py-2 ${isActive ? 'bg-amber-500' : ''}`;
+  `flex w-full items-center justify-center space-x-2 rounded-2xl px-2 py-2 ${isActive ? 'bg-amber-500' : ''}`;
 
 function Footer() {
   return (

@@ -1,10 +1,15 @@
-import { Button } from '@/components/ui/button';
+import WordsList from '@/components/words/WordsList';
+
+const words = [
+  { id: 1, word: 'word', translate: 'слово' },
+  { id: 2, word: 'forest', translate: 'лес' },
+];
 
 function Words() {
   return (
     <>
       <h1 className="text-center text-3xl">Words</h1>
-      <Button>TEST</Button>
+      <WordsList words={words} />
     </>
   );
 }
