@@ -9,7 +9,7 @@ import type { WordDetail } from '@/types';
 function CardWord({ wordDetail }: { wordDetail: WordDetail }) {
   const [isShowTranslate, setIsShowTranslate] = useState(false);
 
-  const { id, word, translate, is_learned, examples } = wordDetail;
+  const { word, translate, examples } = wordDetail;
 
   return (
     <Card className="flex-1 gap-0 rounded-xl bg-gray-500/5 px-0 pb-0 text-gray-50">
