@@ -1,0 +1,66 @@
+import { useState } from 'react';
+import { EyeIcon } from '@heroicons/react/24/solid';
+import { Button } from '../ui/button';
+import { Card, CardContent, CardFooter, CardHeader } from '../ui/card';
+import { Separator } from '../ui/separator';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../ui/accordion';
+import type { WordDetail } from '@/types';
+
+function CardWord({ wordDetail }: { wordDetail: WordDetail }) {
+  const [isShowTranslate, setIsShowTranslate] = useState(false);
+
+  const { id, word, translate, is_learned, examples } = wordDetail;
+
+  return (
+    <Card className="flex-1 gap-0 rounded-xl bg-gray-500/5 px-0 pb-0 text-gray-50">
+      <CardHeader>
+        <p className="text-2xl">{word}</p>
+      </CardHeader>
+
+      <CardContent className="flex w-full flex-1">
+        {isShowTranslate ? (
+          <div className="animate-in fade-in w-full py-3 duration-300">
+            <Separator />
+            <div className="">
+              <p className="animate-in fade-in fill-mode-[both] slide-in-from-bottom-3 py-3 text-center text-2xl duration-400">
+                {translate}
+              </p>
+
+              <Accordion
+                multiple
+                className="animate-in fade-in fill-mode-[both] delay-400 duration-300"
+              >
+                {examples.map((example) => {
+                  return (
+                    <AccordionItem value={example.en}>
+                      <AccordionTrigger>{example.en}</AccordionTrigger>
+                      <AccordionContent>{example.ru}</AccordionContent>
+                    </AccordionItem>
+                  );
+                })}
+              </Accordion>
+            </div>
+          </div>
+        ) : (
+          <Button
+            className="m-auto rounded-lg border-gray-100/10 bg-slate-950 px-8 py-8 hover:bg-slate-900"
+            onClick={() => setIsShowTranslate((show) => !show)}
+          >
+            <EyeIcon className="size-7 text-gray-100" />
+          </Button>
+        )}
+      </CardContent>
+
+      <CardFooter className="flex px-0">
+        <Button variant="ghost" className="flex-1 rounded-none py-6 font-semibold">
+          Я вспомнил
+        </Button>
+        <Button variant="ghost" className="flex-1 rounded-none py-6 font-semibold">
+          Я не вспомнил
+        </Button>
+      </CardFooter>
+    </Card>
+  );
+}
+
+export default CardWord;

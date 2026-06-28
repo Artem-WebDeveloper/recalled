@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { Separator } from '@/components/ui/separator';
-import type { IWord } from './types';
 import { EyeIcon } from '@heroicons/react/24/solid';
 import { Button } from '../ui/button';
+import type { Word } from '@/types';
 
-function WordItem({ word }: { word: IWord }) {
+function WordItem({ word }: { word: Word }) {
   const [isShowTranslate, setIsShowTranslate] = useState(false);
 
   return (

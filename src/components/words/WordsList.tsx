@@ -1,10 +1,10 @@
 import { Link } from 'react-router';
 import { Separator } from '../ui/separator';
-import type { IWord } from './types';
 import WordItem from './WordItem';
 import { PlusCircleIcon } from '@heroicons/react/24/solid';
+import type { Word } from '@/types';
 
-function WordsList({ words }: { words: IWord[] }) {
+function WordsList({ words }: { words: Word[] }) {
   if (words.length === 0)
     return (
       <div className="flex flex-1 flex-col items-center justify-center gap-3 space-x-5 py-20">
