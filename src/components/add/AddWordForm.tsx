@@ -1,9 +1,9 @@
-import { ChevronDownIcon } from '@heroicons/react/24/solid';
-import { Button } from '../ui/button';
+import { useState } from 'react';
+import { PlusCircleIcon } from '@heroicons/react/24/outline';
 import { Field, FieldLabel } from '../ui/field';
+import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import AddExample from './AddExample';
-import { useState } from 'react';
 
 function AddWordForm() {
   const [exampleIds, setExampleIds] = useState<string[]>([]);
@@ -18,7 +18,7 @@ function AddWordForm() {
 
   return (
     <form>
-      <Field className="gap-1">
+      <Field className="mb-2 gap-1">
         <FieldLabel htmlFor="english-word" className="text-gray-400">
           Слово на английском
         </FieldLabel>
@@ -32,14 +32,21 @@ function AddWordForm() {
         <Input className="" id="translate-word" type="text" />
       </Field>
 
-      <ul>
-        {exampleIds.map((exampleId, i) => (
-          <AddExample key={exampleId} num={i + 1} id={exampleId} onDelete={handleDeleteExample} />
-        ))}
-      </ul>
+      {exampleIds.length > 0 && (
+        <ul className="mt-5 flex flex-col gap-6">
+          {exampleIds.map((exampleId, i) => (
+            <AddExample key={exampleId} num={i + 1} id={exampleId} onDelete={handleDeleteExample} />
+          ))}
+        </ul>
+      )}
 
-      <Button type="button" onClick={handleAddExample} variant="outline" className="bg-transparent">
-        <span>Добавить пример</span> <ChevronDownIcon />
+      <Button
+        type="button"
+        onClick={handleAddExample}
+        variant="outline"
+        className="mt-5 bg-transparent"
+      >
+        <span>Добавить пример</span> <PlusCircleIcon className="size-6.5" />
       </Button>
     </form>
   );
