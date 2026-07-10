@@ -22,8 +22,8 @@ function WordsList({ words }: { words: Word[] }) {
     <ul className="py-2">
       {words.map((word, i, words) => {
         return (
-          <li>
-            <WordItem key={word.id} word={word} />
+          <li key={word.id}>
+            <WordItem word={word} />
             {i !== words.length - 1 && <Separator />}
           </li>
         );
