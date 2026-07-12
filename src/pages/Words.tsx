@@ -8,7 +8,7 @@ const words = [
 function Words() {
   return (
     <>
-      <h1 className="text-center text-3xl">Words</h1>
+      <h1 className="mb-10 text-center text-3xl">Words</h1>
       <WordsList words={words} />
     </>
   );
