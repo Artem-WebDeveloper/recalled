@@ -1,20 +1,27 @@
 import { XMarkIcon } from '@heroicons/react/24/solid';
 import { Field } from '../ui/field';
 import { Input } from '../ui/input';
-import type { UseFieldArrayRemove, UseFormRegister } from 'react-hook-form';
-import type { AddWordFormValues } from './types';
+import type { FieldErrors, UseFieldArrayRemove, UseFormRegister } from 'react-hook-form';
+import type { AddWordFormValues } from './schema';
 
 type AddExampleProps = {
   register: UseFormRegister<AddWordFormValues>;
   remove: UseFieldArrayRemove;
   index: number;
+  errors: FieldErrors<AddWordFormValues>;
 };
 
-function AddExample({ register, remove, index }: AddExampleProps) {
+function AddExample({ register, remove, index, errors }: AddExampleProps) {
+  const englishError = errors.examples?.[index]?.english;
+  const translateError = errors.examples?.[index]?.translate;
+
   return (
     <li className="animate-in fade-in duration-400">
       <div className="mb-1 flex justify-between">
         <p className="text-sm text-gray-400">Пример {index + 1}</p>
+        <span className="text-destructive text-sm">
+          {englishError?.message || translateError?.message}
+        </span>
         <button
           type="button"
           onClick={(e) => {
@@ -32,11 +39,17 @@ function AddExample({ register, remove, index }: AddExampleProps) {
           {...register(`examples.${index}.english`)}
           placeholder="Текст на английском"
           type="text"
+          aria-invalid={!!englishError?.message}
         />
       </Field>
 
       <Field className="gap-3">
-        <Input {...register(`examples.${index}.translate`)} placeholder="Перевод" type="text" />
+        <Input
+          {...register(`examples.${index}.translate`)}
+          placeholder="Перевод"
+          type="text"
+          aria-invalid={!!translateError?.message}
+        />
       </Field>
     </li>
   );

@@ -32,7 +32,7 @@ function CardWord({ wordDetail }: { wordDetail: WordDetail }) {
               >
                 {examples.map((example) => {
                   return (
-                    <AccordionItem value={example.en}>
+                    <AccordionItem key={example.en} value={example.en}>
                       <AccordionTrigger>{example.en}</AccordionTrigger>
                       <AccordionContent>{example.ru}</AccordionContent>
                     </AccordionItem>
