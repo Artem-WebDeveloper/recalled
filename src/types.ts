@@ -5,6 +5,14 @@ export type Word = {
 };
 
 export type WordDetail = Word & {
-  is_learned: boolean;
+  created_at: Date;
+  next_review_at: Date;
   examples: { en: string; ru: string }[];
+  repetitions: number;
+};
+
+export type WordApi = {
+  id: number;
+  word: string;
+  translate: string;
 };

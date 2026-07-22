@@ -1,4 +1,4 @@
-const url = `${import.meta.env.VITE_SUPABASE_URL}words`;
+const url = `${import.meta.env.VITE_SUPABASE_URL}/rest/v1/words`;
 
 export async function getWords() {
   const res = await fetch(url, {
