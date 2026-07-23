@@ -2,8 +2,8 @@ import WordsList from '@/components/words/WordsList';
 import { useGetWordsQuery } from '@/services/words';
 
 const words = [
-  { id: 1, word: 'word', translate: 'слово' },
-  { id: 2, word: 'forest', translate: 'лес' },
+  { id: 1, word: 'word', translation: 'слово' },
+  { id: 2, word: 'forest', translation: 'лес' },
 ];
 
 function Words() {

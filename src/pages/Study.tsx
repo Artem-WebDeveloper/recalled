@@ -5,10 +5,10 @@ import { useEffect } from 'react';
 function Study() {
   // Test
   useEffect(() => {
-    getWords();
+    // getWords();
     // addWord({
-    //   word: 'ambiguous',
-    //   translation: 'неоднозначный',
+    //   word: 'ambigвыаываuous',
+    //   translation: 'неоднознываываачный',
     //   examples: [{ en: 'test', ru: 'тест' }],
     // });
   }, []);

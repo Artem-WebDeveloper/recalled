@@ -13,14 +13,14 @@ type AddExampleProps = {
 
 function AddExample({ register, remove, index, errors }: AddExampleProps) {
   const englishError = errors.examples?.[index]?.english;
-  const translateError = errors.examples?.[index]?.translate;
+  const translationError = errors.examples?.[index]?.translation;
 
   return (
     <li className="animate-in fade-in duration-400">
       <div className="mb-1 flex justify-between">
         <p className="text-sm text-gray-400">Пример {index + 1}</p>
         <span className="text-destructive text-sm">
-          {englishError?.message || translateError?.message}
+          {englishError?.message || translationError?.message}
         </span>
         <button
           type="button"
@@ -45,10 +45,10 @@ function AddExample({ register, remove, index, errors }: AddExampleProps) {
 
       <Field className="gap-3">
         <Input
-          {...register(`examples.${index}.translate`)}
+          {...register(`examples.${index}.translation`)}
           placeholder="Перевод"
           type="text"
-          aria-invalid={!!translateError?.message}
+          aria-invalid={!!translationError?.message}
         />
       </Field>
     </li>

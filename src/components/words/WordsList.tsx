@@ -2,9 +2,9 @@ import { Link } from 'react-router';
 import { Separator } from '../ui/separator';
 import WordItem from './WordItem';
 import { PlusCircleIcon } from '@heroicons/react/24/solid';
-import type { Word } from '@/types';
+import type { WordPreview } from '@/types';
 
-function WordsList({ words }: { words: Word[] }) {
+function WordsList({ words }: { words: WordPreview[] }) {
   if (words.length === 0)
     return (
       <div className="flex flex-1 flex-col items-center justify-center gap-3 space-x-5 py-20">

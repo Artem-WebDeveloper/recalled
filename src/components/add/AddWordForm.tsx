@@ -6,6 +6,7 @@ import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import AddExample from './AddExample';
 import { AddWordFormSchema, type AddWordFormValues } from './schema';
+import { useAddWordMutation } from '@/services/words';
 
 function AddWordForm() {
   const {
@@ -18,10 +19,11 @@ function AddWordForm() {
     resolver: zodResolver(AddWordFormSchema),
     defaultValues: {
       englishWord: '',
-      translateWord: '',
+      translation: '',
       examples: [],
     },
   });
+  const [addWord, { isLoading, isError }] = useAddWordMutation();
 
   const { fields, append, remove } = useFieldArray({
     control,
@@ -29,7 +31,12 @@ function AddWordForm() {
   });
 
   const onSubmit: SubmitHandler<AddWordFormValues> = (data) => {
-    console.log(data);
+    const newWord = {
+      word: data.englishWord,
+      translation: data.translation,
+      examples: data.examples,
+    };
+    addWord(newWord);
     reset();
   };
 
@@ -51,16 +58,16 @@ function AddWordForm() {
       </Field>
 
       <Field className="gap-1">
-        <FieldLabel htmlFor="translateWord" className="flex justify-between text-gray-400">
+        <FieldLabel htmlFor="translation" className="flex justify-between text-gray-400">
           <span>Перевод</span>
           <span className="text-destructive">
-            {errors.translateWord && errors.translateWord.message}
+            {errors.translation && errors.translation.message}
           </span>
         </FieldLabel>
         <Input
-          aria-invalid={!!errors.translateWord}
-          {...register('translateWord')}
-          id="translateWord"
+          aria-invalid={!!errors.translation}
+          {...register('translation')}
+          id="translation"
           type="text"
         />
       </Field>
@@ -84,14 +91,14 @@ function AddWordForm() {
           className="mt-5 mb-5 self-start bg-transparent"
           type="button"
           variant="outline"
-          onClick={() => append({ english: '', translate: '' })}
+          onClick={() => append({ english: '', translation: '' })}
         >
           <span>Добавить пример</span> <PlusCircleIcon className="size-6.5" />
         </Button>
       </div>
 
       <Button
-        disabled={!isValid || isSubmitting}
+        disabled={!isValid || isSubmitting || isLoading}
         className="mb-1 w-full shrink-0 rounded-lg"
         type="submit"
         variant="secondary"

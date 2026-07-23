@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { Separator } from '@/components/ui/separator';
 import { EyeIcon } from '@heroicons/react/24/solid';
 import { Button } from '../ui/button';
-import type { Word } from '@/types';
+import type { WordPreview } from '@/types';
 
-function WordItem({ word }: { word: Word }) {
+function WordItem({ word }: { word: WordPreview }) {
   const [isShowTranslate, setIsShowTranslate] = useState(false);
 
   return (
@@ -14,7 +14,9 @@ function WordItem({ word }: { word: Word }) {
 
       <div className="flex flex-1 justify-center">
         {isShowTranslate ? (
-          <p className="animate-in fade-in slide-in-from-bottom-2 duration-200">{word.translate}</p>
+          <p className="animate-in fade-in slide-in-from-bottom-2 duration-200">
+            {word.translation}
+          </p>
         ) : (
           <Button
             onClick={() => setIsShowTranslate((show) => !show)}
