@@ -16,6 +16,18 @@ export const wordsApi = createApi({
   endpoints: (builder) => ({
     getWords: builder.query<Word[], void>({
       query: () => 'words?select=*',
+      providesTags: ['Words'],
+    }),
+
+    getPracticingNewWords: builder.query<Word[], void>({
+      query: () => 'words?select=*&repetitions=eq.0&order=created_at.desc&limit=5',
+      providesTags: ['Words'],
+    }),
+
+    getPracticingReviewWords: builder.query<Word[], void>({
+      query: () =>
+        'words?select=*&repetitions=gt.0&next_review_at=lte.now()&order=next_review_at.asc&limit=15',
+      providesTags: ['Words'],
     }),
 
     addWord: builder.mutation<Word, WordCreate>({
@@ -32,4 +44,9 @@ export const wordsApi = createApi({
   }),
 });
 
-export const { useGetWordsQuery, useAddWordMutation } = wordsApi;
+export const {
+  useGetWordsQuery,
+  useGetPracticingNewWordsQuery,
+  useGetPracticingReviewWordsQuery,
+  useAddWordMutation,
+} = wordsApi;

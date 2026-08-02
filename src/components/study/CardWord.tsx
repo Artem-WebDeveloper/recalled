@@ -1,13 +1,19 @@
 import { useState } from 'react';
 import { EyeIcon } from '@heroicons/react/24/solid';
+import { useDispatch, useSelector } from 'react-redux';
+
 import { Button } from '../ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '../ui/card';
 import { Separator } from '../ui/separator';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../ui/accordion';
 import type { WordDetail } from '@/types';
+import { nextWord } from '@/store/sessionSlice';
+import { useAppDispatch } from '@/store/store';
 
-function CardWord({ wordDetail }: { wordDetail: WordDetail }) {
+function CardWord({ wordDetail }: { wordDetail: WordDetail | undefined }) {
   const [isShowTranslate, setIsShowTranslate] = useState(false);
+  const dispatch = useAppDispatch();
+  if (!wordDetail) return '';
 
   const { word, translate, examples } = wordDetail;
 
@@ -52,10 +58,18 @@ function CardWord({ wordDetail }: { wordDetail: WordDetail }) {
       </CardContent>
 
       <CardFooter className="flex px-0">
-        <Button variant="ghost" className="flex-1 rounded-none py-6 font-semibold">
+        <Button
+          variant="ghost"
+          className="flex-1 rounded-none py-6 font-semibold"
+          onClick={() => dispatch(nextWord(true))}
+        >
           Я вспомнил
         </Button>
-        <Button variant="ghost" className="flex-1 rounded-none py-6 font-semibold">
+        <Button
+          variant="ghost"
+          className="flex-1 rounded-none py-6 font-semibold"
+          onClick={() => dispatch(nextWord(false))}
+        >
           Я не вспомнил
         </Button>
       </CardFooter>
