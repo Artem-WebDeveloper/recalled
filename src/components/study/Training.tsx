@@ -1,13 +1,12 @@
-import { wordsCardMock } from '@/mocks';
 import CardWord from './CardWord';
 import { useGetPracticingNewWordsQuery, useGetPracticingReviewWordsQuery } from '@/services/words';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 import { addSessionWords } from '@/store/sessionSlice';
 import { useEffect } from 'react';
+import { Spinner } from '../ui/spinner';
 
 function Training() {
-  const words = wordsCardMock;
-  const { data: newWords } = useGetPracticingNewWordsQuery();
+  const { data: newWords, isLoading } = useGetPracticingNewWordsQuery();
   const { data: reviewWords } = useGetPracticingReviewWordsQuery();
 
   const queue = useAppSelector((state) => state.session.queue);
@@ -23,10 +22,18 @@ function Training() {
 
   if (isCompleted)
     return (
-      <>
+      <div className="flex flex-1">
         <p>Сессия завершена!</p>
-      </>
+      </div>
     );
+
+  if (isLoading) {
+    return (
+      <div className="flex flex-1">
+        <Spinner className="m-auto size-10" />
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-1">

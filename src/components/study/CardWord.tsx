@@ -1,16 +1,15 @@
 import { useState } from 'react';
 import { EyeIcon } from '@heroicons/react/24/solid';
-import { useDispatch, useSelector } from 'react-redux';
 
 import { Button } from '../ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '../ui/card';
 import { Separator } from '../ui/separator';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../ui/accordion';
-import type { WordDetail } from '@/types';
+import type { SessionWord } from '@/types';
 import { nextWord } from '@/store/sessionSlice';
 import { useAppDispatch } from '@/store/store';
 
-function CardWord({ wordDetail }: { wordDetail: WordDetail | undefined }) {
+function CardWord({ wordDetail }: { wordDetail: SessionWord | undefined }) {
   const [isShowTranslate, setIsShowTranslate] = useState(false);
   const dispatch = useAppDispatch();
   if (!wordDetail) return '';

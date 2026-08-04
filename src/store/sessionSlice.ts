@@ -1,9 +1,9 @@
-import type { Word } from '@/types';
+import type { SessionWord, Word } from '@/types';
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
 type SessionState = {
-  queue: Array<Word & { attempts: number }>;
-  completed: Array<Word & { attempts: number }>;
+  queue: Array<SessionWord>;
+  completed: Array<SessionWord>;
   currentIndexWord: number;
   isCompleted: boolean;
 };
@@ -49,36 +49,3 @@ export const sessionSlice = createSlice({
 export const { addSessionWords, nextWord } = sessionSlice.actions;
 
 export default sessionSlice.reducer;
-
-/* while (curWord.remembered === false) {
-        if (state.queue.length > state.currentIndexWord) {
-          state.currentIndexWord++;
-        } else if (state.queue.length === state.currentIndexWord) {
-          state.currentIndexWord = 0;
-        }
-      } */
-
-/* 
-        
-        
-      // если вспомнил
-      if (action.payload === true) {
-        curWord.remembered = true;
-      }
-      // если не вспомнил
-      else {
-        curWord.attempts++;
-      }
-
-      state.currentIndexWord++;
-
-      const isComplete = state.queue.every((word) => word.remembered);
-
-      while (state.queue[state.currentIndexWord + 1].remembered !== false) {
-        if (state.queue.length > state.currentIndexWord) {
-          state.currentIndexWord++;
-        } else if (state.queue.length - 1 === state.currentIndexWord) {
-          state.currentIndexWord = 0;
-        }
-      }
-        */

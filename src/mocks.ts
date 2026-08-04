@@ -1,6 +1,4 @@
-import type { WordDetail } from './types';
-
-export const wordsCardMock: WordDetail[] = [
+export const wordsCardMock = [
   {
     id: 1,
     word: 'ambiguous',
