@@ -19,7 +19,7 @@ export const sessionSlice = createSlice({
   name: 'session',
   initialState,
   reducers: {
-    addSessionWords: (state, action: PayloadAction<Word[]>) => {
+    startSession: (state, action: PayloadAction<Word[]>) => {
       state.isCompleted = false;
       state.queue = action.payload.map((word) => ({ ...word, remembered: false, attempts: 0 }));
     },
@@ -46,6 +46,6 @@ export const sessionSlice = createSlice({
   },
 });
 
-export const { addSessionWords, nextWord } = sessionSlice.actions;
+export const { startSession, nextWord } = sessionSlice.actions;
 
 export default sessionSlice.reducer;

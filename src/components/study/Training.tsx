@@ -1,24 +1,37 @@
 import CardWord from './CardWord';
-import { useGetPracticingNewWordsQuery, useGetPracticingReviewWordsQuery } from '@/services/words';
+import { useGetTrainingWordsQuery, useUpdateSessionWordsMutation } from '@/services/words';
 import { useAppDispatch, useAppSelector } from '@/store/store';
-import { addSessionWords } from '@/store/sessionSlice';
+import { startSession } from '@/store/sessionSlice';
 import { useEffect } from 'react';
 import { Spinner } from '../ui/spinner';
+import { calculateReviewPayload } from '@/lib/repetititon';
 
 function Training() {
-  const { data: newWords, isLoading } = useGetPracticingNewWordsQuery();
-  const { data: reviewWords } = useGetPracticingReviewWordsQuery();
+  const { data: trainingWords, isLoading: isFetching } = useGetTrainingWordsQuery({
+    newLimit: 5,
+    reviewLimit: 15,
+  });
+
+  const [updateSessionWords, { isLoading: isUpdating, isError, error }] =
+    useUpdateSessionWordsMutation();
 
   const queue = useAppSelector((state) => state.session.queue);
+  const completedQueue = useAppSelector((state) => state.session.completed);
   const isCompleted = useAppSelector((state) => state.session.isCompleted);
   const currentIndexWord = useAppSelector((state) => state.session.currentIndexWord);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (!isCompleted && queue.length === 0 && newWords && reviewWords) {
-      dispatch(addSessionWords([...newWords, ...reviewWords]));
+    if (trainingWords && !isCompleted && queue.length === 0) {
+      dispatch(startSession(trainingWords));
     }
-  }, [dispatch, newWords, reviewWords, queue.length, isCompleted]);
+  }, [dispatch, trainingWords, queue.length, isCompleted]);
+
+  useEffect(() => {
+    if (!isCompleted) return;
+    const payload = calculateReviewPayload(completedQueue);
+    updateSessionWords(payload);
+  }, [isCompleted, completedQueue, updateSessionWords]);
 
   if (isCompleted)
     return (
@@ -27,10 +40,21 @@ function Training() {
       </div>
     );
 
-  if (isLoading) {
+  if (isFetching) {
     return (
       <div className="flex flex-1">
         <Spinner className="m-auto size-10" />
+      </div>
+    );
+  }
+
+  if (isUpdating) {
+    return (
+      <div className="flex flex-1">
+        <div className="m-auto flex items-center gap-2">
+          <p>Отправка данных...</p>
+          <Spinner className="size-10" />
+        </div>
       </div>
     );
   }

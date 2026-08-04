@@ -14,7 +14,7 @@ function CardWord({ wordDetail }: { wordDetail: SessionWord | undefined }) {
   const dispatch = useAppDispatch();
   if (!wordDetail) return '';
 
-  const { word, translate, examples } = wordDetail;
+  const { word, translation, examples } = wordDetail;
 
   return (
     <Card className="flex-1 gap-0 rounded-xl bg-gray-500/5 px-0 pb-0 text-gray-50">
@@ -28,7 +28,7 @@ function CardWord({ wordDetail }: { wordDetail: SessionWord | undefined }) {
             <Separator />
             <div className="">
               <p className="animate-in fade-in fill-mode-[both] slide-in-from-bottom-3 py-3 text-center text-2xl duration-400">
-                {translate}
+                {translation}
               </p>
 
               <Accordion
@@ -37,9 +37,9 @@ function CardWord({ wordDetail }: { wordDetail: SessionWord | undefined }) {
               >
                 {examples.map((example) => {
                   return (
-                    <AccordionItem key={example.en} value={example.en}>
-                      <AccordionTrigger>{example.en}</AccordionTrigger>
-                      <AccordionContent>{example.ru}</AccordionContent>
+                    <AccordionItem key={example.english} value={example.english}>
+                      <AccordionTrigger>{example.english}</AccordionTrigger>
+                      <AccordionContent>{example.translation}</AccordionContent>
                     </AccordionItem>
                   );
                 })}
