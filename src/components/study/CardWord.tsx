@@ -9,12 +9,11 @@ import type { SessionWord } from '@/types';
 import { nextWord } from '@/store/sessionSlice';
 import { useAppDispatch } from '@/store/store';
 
-function CardWord({ wordDetail }: { wordDetail: SessionWord | undefined }) {
+function CardWord({ wordDetail }: { wordDetail: SessionWord }) {
   const [isShowTranslate, setIsShowTranslate] = useState(false);
   const dispatch = useAppDispatch();
-  if (!wordDetail) return '';
 
-  const { word, translation, examples } = wordDetail;
+  const { word, translation, examples, id } = wordDetail;
 
   return (
     <Card className="flex-1 gap-0 rounded-xl bg-gray-500/5 px-0 pb-0 text-gray-50">
@@ -35,9 +34,12 @@ function CardWord({ wordDetail }: { wordDetail: SessionWord | undefined }) {
                 multiple
                 className="animate-in fade-in fill-mode-[both] delay-400 duration-300"
               >
-                {examples.map((example) => {
+                {examples.map((example, index) => {
                   return (
-                    <AccordionItem key={example.english} value={example.english}>
+                    <AccordionItem
+                      key={`${example.english}-${id}-${index}`}
+                      value={example.english}
+                    >
                       <AccordionTrigger>{example.english}</AccordionTrigger>
                       <AccordionContent>{example.translation}</AccordionContent>
                     </AccordionItem>
