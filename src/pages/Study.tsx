@@ -1,21 +1,11 @@
-import Training from '@/components/study/Training';
-import { addWord, getWords } from '@/services/api';
-import { useEffect } from 'react';
+import StudyFlow from '@/components/study/StudyFlow';
 
 function Study() {
-  // Test
-  useEffect(() => {
-    // getWords();
-    // addWord({
-    //   word: 'ambigвыаываuous',
-    //   translation: 'неоднознываываачный',
-    //   examples: [{ en: 'test', ru: 'тест' }],
-    // });
-  }, []);
   return (
     <>
       <h1 className="mb-10 text-center text-3xl">Study</h1>
-      <Training />
+      {/* <Training /> */}
+      {<StudyFlow />}
     </>
   );
 }

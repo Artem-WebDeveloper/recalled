@@ -1,14 +1,18 @@
-import type { SessionWord, Word } from '@/types';
+import type { SessionMode, SessionWord, Word } from '@/types';
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
 type SessionState = {
+  mode: SessionMode;
   queue: Array<SessionWord>;
+  totalWords: number;
   completed: Array<SessionWord>;
   currentIndexWord: number;
   isCompleted: boolean;
 };
 
 const initialState: SessionState = {
+  mode: null,
+  totalWords: 0,
   queue: [],
   completed: [],
   currentIndexWord: 0,
@@ -19,9 +23,19 @@ export const sessionSlice = createSlice({
   name: 'session',
   initialState,
   reducers: {
+    changeMode: (state, action: PayloadAction<SessionMode>) => {
+      state.mode = action.payload;
+      state.queue = [];
+      state.completed = [];
+      state.totalWords = 0;
+      state.currentIndexWord = 0;
+      state.isCompleted = false;
+    },
+
     startSession: (state, action: PayloadAction<Word[]>) => {
       state.isCompleted = false;
       state.queue = action.payload.map((word) => ({ ...word, remembered: false, attempts: 0 }));
+      state.totalWords = action.payload.length;
     },
 
     nextWord: (state, action: PayloadAction<boolean>) => {
@@ -46,6 +60,6 @@ export const sessionSlice = createSlice({
   },
 });
 
-export const { startSession, nextWord } = sessionSlice.actions;
+export const { changeMode, startSession, nextWord } = sessionSlice.actions;
 
 export default sessionSlice.reducer;

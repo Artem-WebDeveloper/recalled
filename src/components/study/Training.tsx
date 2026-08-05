@@ -5,6 +5,7 @@ import { startSession } from '@/store/sessionSlice';
 import { useEffect } from 'react';
 import { Spinner } from '../ui/spinner';
 import { calculateReviewPayload } from '@/lib/repetititon';
+import StartScreen from './StartScreen';
 
 function Training() {
   const { data: trainingWords, isLoading: isFetching } = useGetTrainingWordsQuery({
@@ -60,9 +61,13 @@ function Training() {
   }
 
   return (
-    <div className="flex flex-1">
-      <CardWord wordDetail={queue[currentIndexWord]} />
-    </div>
+    <>
+      <StartScreen />
+
+      <div className="flex flex-1">
+        <CardWord wordDetail={queue[currentIndexWord]} />
+      </div>
+    </>
   );
 }
 

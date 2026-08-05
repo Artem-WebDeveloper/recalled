@@ -1,6 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import type { Word, WordCreate, WordSessionUpdate } from '@/types';
-import { number } from 'zod';
 
 export const wordsApi = createApi({
   reducerPath: 'wordsApi',
@@ -30,6 +29,16 @@ export const wordsApi = createApi({
         };
       },
       invalidatesTags: ['Words'],
+    }),
+
+    getRandomWords: builder.query<Word[], { wordsLimit: number }>({
+      query: ({ wordsLimit }) => ({
+        url: 'rpc/get_random_words',
+        method: 'POST',
+        body: {
+          words_limit: wordsLimit,
+        },
+      }),
     }),
 
     getTrainingWords: builder.query<Word[], { newLimit: number; reviewLimit: number }>({
@@ -65,5 +74,6 @@ export const {
   useGetWordsQuery,
   useAddWordMutation,
   useUpdateSessionWordsMutation,
+  useGetRandomWordsQuery,
   useGetTrainingWordsQuery,
 } = wordsApi;
