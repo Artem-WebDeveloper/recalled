@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import type { Word, WordCreate, WordSessionUpdate } from '@/types';
+import { WordsSchema } from '../schemas';
 
 export const wordsApi = createApi({
   reducerPath: 'wordsApi',
@@ -14,8 +15,20 @@ export const wordsApi = createApi({
   tagTypes: ['Words'],
 
   endpoints: (builder) => ({
-    getWords: builder.query<Word[], void>({
-      query: () => 'words?select=*',
+    getWords: builder.query<{ words: Word[]; total: number }, { page: number; limit: number }>({
+      query: ({ page, limit }) => {
+        const offset = limit * (page - 1);
+
+        return {
+          url: `words?select=*&limit=${limit}&offset=${offset}`,
+          headers: { Prefer: 'count=exact' },
+        };
+      },
+      transformResponse(response, meta) {
+        const words = WordsSchema.parse(response);
+        const total = Number(meta?.response?.headers.get('content-range')?.split('/')[1]);
+        return { words, total };
+      },
       providesTags: ['Words'],
     }),
 

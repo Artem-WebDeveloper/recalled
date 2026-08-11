@@ -1,12 +1,8 @@
-export type Word = {
-  id: number;
-  word: string;
-  translation: string;
-  examples: { english: string; translation: string }[];
-  repetitions: number;
-  created_at: string;
-  next_review_at: string;
-};
+import type z from 'zod';
+import type { WordSchema } from './schemas';
+
+export type Word = z.infer<typeof WordSchema>;
+
 export type SessionMode = 'training' | 'practice' | null;
 export type SessionWord = Word & { attempts: number };
 
