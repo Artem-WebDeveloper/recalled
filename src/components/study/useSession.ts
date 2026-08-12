@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useGetRandomWordsQuery, useGetTrainingWordsQuery } from '@/services/words';
 import { startSession } from '@/store/sessionSlice';
 import { useAppDispatch, useAppSelector } from '@/store/store';
+import { FETCH_NEW_WORDS, FETCH_RANDOM_WORDS, FETCH_REVIEW_WORDS } from '@/constants';
 
 function useSession() {
   const mode = useAppSelector((state) => state.session.mode);
@@ -10,15 +11,15 @@ function useSession() {
 
   const { data: trainingWords, isLoading: isTrainingFetching } = useGetTrainingWordsQuery(
     {
-      newLimit: 5,
-      reviewLimit: 15,
+      newLimit: FETCH_NEW_WORDS,
+      reviewLimit: FETCH_REVIEW_WORDS,
     },
     {
       skip: mode !== 'training' || queueLength > 0,
     },
   );
   const { data: randomWords, isLoading: isRandomFetching } = useGetRandomWordsQuery(
-    { wordsLimit: 10 },
+    { wordsLimit: FETCH_RANDOM_WORDS },
     { skip: mode !== 'practice' || queueLength > 0 },
   );
 

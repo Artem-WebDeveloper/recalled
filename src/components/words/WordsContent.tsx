@@ -1,26 +1,22 @@
-import { useSearchParams } from 'react-router';
 import { useGetWordsQuery } from '@/services/words';
 import WordsList from './WordsList';
 import { Spinner } from '../ui/spinner';
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from '../ui/pagination';
+import Pagination from '../../ui/Pagination';
+import { useSearchParams } from 'react-router';
+import { WORDS_PAGE_SIZE } from '@/constants';
 
 function WordsContent() {
-  const [params, setSearchParams] = useSearchParams();
+  const [params] = useSearchParams();
   const page = Number(params.get('page')) || 1;
 
-  const { data, isLoading: isFetchingWords } = useGetWordsQuery({ page: page, limit: 5 });
+  const { data, isLoading, isFetching } = useGetWordsQuery({
+    page: page,
+    limit: WORDS_PAGE_SIZE,
+  });
   const words = data?.words ?? [];
-  const total = data?.total ?? 0;
+  const wordsCount = data?.total ?? 0;
 
-  if (isFetchingWords && words.length === 0) {
+  if (isLoading && words.length === 0) {
     return (
       <div className="flex flex-1">
         <Spinner className="m-auto size-10" />
@@ -30,33 +26,16 @@ function WordsContent() {
 
   return (
     <div className="flex flex-1 flex-col">
-      <WordsList words={words} />
+      <div
+        className={`transition-opacity duration-200 ${isFetching ? 'opacity-50' : 'opacity-100'}`}
+      >
+        <WordsList words={words} />
+      </div>
 
-      <div className="mt-auto">
-        <Pagination>
-          <PaginationContent>
-            <PaginationItem>
-              <PaginationPrevious href="#" />
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink href="#">1</PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink href="#" isActive>
-                2
-              </PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink href="#">3</PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationEllipsis />
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationNext href="#" />
-            </PaginationItem>
-          </PaginationContent>
-        </Pagination>
+      <div
+        className={`mt-auto transition-opacity duration-200 ${isFetching ? 'opacity-50' : 'opacity-100'}`}
+      >
+        {<Pagination count={wordsCount} pageSize={WORDS_PAGE_SIZE} />}
       </div>
     </div>
   );
