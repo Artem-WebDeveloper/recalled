@@ -15,3 +15,5 @@ export type WordApi = {
   word: string;
   translate: string;
 };
+
+export type PaginationPageItem = number | 'ellipsis';

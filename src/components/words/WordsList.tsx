@@ -8,7 +8,7 @@ function WordsList({ words }: { words: WordPreview[] }) {
   if (words.length === 0)
     return (
       <div className="flex flex-1 flex-col items-center justify-center gap-3 space-x-5 py-20">
-        <p className="text-2xl">No words yet</p>
+        <p className="text-2xl">No words found</p>
         <Link
           to="/add"
           className="text-1xl bg-accent-foreground inline-flex items-center space-x-0.5 rounded-2xl px-4 py-2 transition-colors hover:bg-amber-700"

@@ -8,6 +8,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '../components/ui/pagination';
+import { getPaginationItems } from '@/lib/getPaginationItems';
 
 type PaginationProps = {
   count: number;
@@ -20,6 +21,8 @@ function Pagination({ count, pageSize }: PaginationProps) {
   const currentPage = Number(params.get('page')) || 1;
 
   const pageCount = Math.ceil(count / pageSize);
+
+  if (pageCount === 0) return null;
 
   function handleChangePage(page: number) {
     params.set('page', String(page));
@@ -42,6 +45,8 @@ function Pagination({ count, pageSize }: PaginationProps) {
 
   const pages = Array.from({ length: pageCount }, (_, i) => i + 1);
 
+  const paginationPages = getPaginationItems(pages, currentPage);
+
   return (
     <PaginationUI>
       <PaginationContent>
@@ -56,8 +61,17 @@ function Pagination({ count, pageSize }: PaginationProps) {
           />
         </PaginationItem>
 
-        {pages.map((numPage) => {
+        {paginationPages.map((numPage) => {
           const isActive = numPage === currentPage;
+
+          if (numPage === 'ellipsis') {
+            return (
+              <PaginationItem>
+                <PaginationEllipsis />
+              </PaginationItem>
+            );
+          }
+
           return (
             <PaginationItem key={numPage}>
               <PaginationLink
@@ -73,10 +87,6 @@ function Pagination({ count, pageSize }: PaginationProps) {
             </PaginationItem>
           );
         })}
-
-        <PaginationItem>
-          <PaginationEllipsis />
-        </PaginationItem>
 
         <PaginationItem>
           <PaginationNext

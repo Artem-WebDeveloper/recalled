@@ -16,7 +16,7 @@ function WordsContent() {
   const words = data?.words ?? [];
   const wordsCount = data?.total ?? 0;
 
-  if (isLoading && words.length === 0) {
+  if (isLoading) {
     return (
       <div className="flex flex-1">
         <Spinner className="m-auto size-10" />
